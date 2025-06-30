@@ -53,7 +53,7 @@ const upload = multer({
 
 const exemptUrls = [
   'http://localhost:3000/auth/register',
-  'https://midominio.com/auth/register'
+  'https://tayta-front.onrender.com/auth/register'
 ];
 
 const conditionalAuth = (req, res, next) => {
