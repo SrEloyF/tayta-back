@@ -60,7 +60,7 @@ const serveStaticWithAuth = (req, res, next) => {
 };
 
 // Rutas para servir archivos estáticos con autenticación
-app.use('/api/uploads/user_imgs', require('./auth/authMiddleware'), express.static(path.join(__dirname, 'uploads','user_imgs')));
+app.use('/api/uploads/user_imgs', express.static(path.join(__dirname, 'uploads','user_imgs')));
 app.use('/api/uploads/item_imgs', serveStaticWithAuth);
 
 // Rutas REST
