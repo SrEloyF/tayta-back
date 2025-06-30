@@ -65,7 +65,6 @@ const conditionalAuth = (req, res, next) => {
 };
 
 router.post('/',
-  conditionalAuth,
   upload.single('imagen'), // ¡Esto ahora procesa los campos del form!
   (req, res) => {
     try {
