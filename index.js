@@ -18,7 +18,7 @@ mongoose.connect(process.env.URI)
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: { origin: ['http://localhost:3000', 'https://taytaservice-2.onrender.com'], methods: ['GET','POST', 'PATCH', 'DELETE'], allowedHeaders: ['Content-Type','Authorization'] }
+  cors: { origin: ['http://localhost:3000', 'https://taytaservice-2.onrender.com', 'https://tayta-front.onrender.com'], methods: ['GET','POST', 'PATCH', 'DELETE'], allowedHeaders: ['Content-Type','Authorization'] }
 });
 
 // Middlewares
@@ -27,7 +27,7 @@ app.use(express.json());
 // Configuración de CORS
 app.use((req, res, next) => {
   // Permitir solicitudes desde el origen del frontend
-  const allowedOrigins = ['http://localhost:3000', 'https://taytaservice-2.onrender.com'];
+  const allowedOrigins = ['http://localhost:3000', 'https://taytaservice-2.onrender.com', 'https://tayta-front.onrender.com/'];
   res.header('Access-Control-Allow-Origin', allowedOrigins.includes(req.headers.origin) ? req.headers.origin : '');
 
   // Permitir credenciales (cookies, encabezados de autenticación)
