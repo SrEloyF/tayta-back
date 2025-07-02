@@ -40,13 +40,16 @@ router.post(
         return res.status(400).json({ success: false, error: 'No se recibió ningún archivo o el archivo es inválido.' });
       }
 
-      // Prepara el form-data para ImageKit
+      const timestamp = Date.now();
+      const fileExtension = req.file.originalname.split('.').pop();
+      const uniqueFileName = `${timestamp}.${fileExtension}`;
+      
       const form = new FormData();
       form.append('file', req.file.buffer, {
-        filename: req.file.originalname,
+        filename: uniqueFileName,
         contentType: req.file.mimetype
       });
-      form.append('fileName', req.file.originalname);
+      form.append('fileName', uniqueFileName);  // Usa el nombre único aquí
       form.append('folder', carpeta);
 
       // Autenticación básica para ImageKit
@@ -79,5 +82,6 @@ router.post(
     }
   }
 );
+
 
 module.exports = router;
