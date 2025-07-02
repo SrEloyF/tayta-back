@@ -6,6 +6,7 @@ const path = require('path');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const { Server } = require('socket.io');
+const fs = require('fs');
 
 const Chat = require('./models/mongoModels/chat');
 const Mensaje = require('./models/mongoModels/mensaje');
@@ -58,6 +59,20 @@ const serveStaticWithAuth = (req, res, next) => {
   }
   next();
 };
+
+app.get('/api/uploads/list/:folder', require('./auth/authMiddleware'), (req, res) => {
+  const { folder } = req.params;
+  if (!['user_imgs', 'item_imgs'].includes(folder)) {
+    return res.status(400).json({ error: 'Carpeta no permitida' });
+  }
+  const dirPath = path.join(__dirname, 'uploads', folder);
+  fs.readdir(dirPath, (err, files) => {
+    if (err) {
+      return res.status(500).json({ error: 'No se pudo leer la carpeta' });
+    }
+    res.json(files);
+  });
+});
 
 // Rutas para servir archivos estáticos con autenticación
 app.use('/api/uploads/user_imgs', require('./auth/authMiddleware'), express.static(path.join(__dirname, 'uploads','user_imgs')));
