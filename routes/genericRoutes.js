@@ -10,6 +10,7 @@ function generateCrudRoutes(controller) {
   router.delete('/:id', controller.delete);
   router.patch('/:id', controller.updateField);
   router.post('/buscar', controller.findByField);
+  router.patch('/:id/fields', controller.updateFields);
 
   return router;
 }
