@@ -75,13 +75,20 @@ app.get('/api/uploads/list/:folder', require('./auth/authMiddleware'), (req, res
 });
 
 // Rutas para servir archivos estáticos con autenticación
-app.use('/api/uploads/user_imgs', require('./auth/authMiddleware'), express.static(path.join(__dirname, 'uploads','user_imgs')));
-app.use('/api/uploads/item_imgs', serveStaticWithAuth);
-app.use('/api/uploads/:folder/:img', (req, res, next) => {
-  if (!res.headersSent) {
-    return res.status(404).json({ error: 'el archivo no existe en el servidor' });
+app.get('/api/uploads/:folder/:img', require('./auth/authMiddleware'), (req, res) => {
+  const { folder, img } = req.params;
+  const allowedFolders = ['user_imgs', 'item_imgs'];
+  if (!allowedFolders.includes(folder)) {
+    return res.status(400).json({ error: 'Carpeta no permitida' });
   }
-  next();
+  if (!img) {
+    return res.status(400).json({ error: 'Nombre de imagen requerido' });
+  }
+  // Construye la URL pública de ImageKit
+  const imagekitBase = 'https://ik.imagekit.io/szedijeix';
+  const url = `${imagekitBase}/${folder}/${img}`;
+  // Redirecciona a la URL de ImageKit
+  return res.redirect(url);
 });
 
 // Rutas REST
