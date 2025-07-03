@@ -112,6 +112,8 @@ app.use('/api/calificaciones', require('./auth/authMiddleware'), require('./rout
 //app.use('/api/compras', require('./auth/authMiddleware'), require('./routes/compraRoutes'));
 app.use('/api/denuncias', require('./auth/authMiddleware'), require('./routes/denunciaRoutes'));
 app.use('/api/upload-img', require('./routes/uploadRoutes')); // uploadRoutes incluye su propio middleware
+
+//urls chats - mongo
 app.use('/api/chats', require('./auth/authMiddleware'), require('./routes/chatRoutes'));
 app.use('/api/mensajes', require('./auth/authMiddleware'), require('./routes/mensajeRoutes'));
 
